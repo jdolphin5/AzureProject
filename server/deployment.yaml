@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-node-users-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-node-users-api
+  template:
+    metadata:
+      labels:
+        app: my-node-users-api
+    spec:
+      containers:
+        - name: my-node-users-api-container
+          image: jdacr1.azurecr.io/my-node-users-api:latest
+          ports:
+            - containerPort: 3000
