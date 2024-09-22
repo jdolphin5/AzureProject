@@ -38,6 +38,7 @@ steps:
       docker tag jdacr1.azurecr.io/my-node-users-api:latest jdacr1.azurecr.io/my-node-users-api:backup-latest
       docker push jdacr1.azurecr.io/my-node-users-api:backup-latest
 
-      docker buildx build -t jdacr1.azurecr.io/my-node-users-api:latest -f Dockerfile --build-arg ENV_FILE=$(DownloadEnvFile.secureFilePath) .
+      cp $(DownloadEnvFile.secureFilePath) .env
+      docker buildx build -t jdacr1.azurecr.io/my-node-users-api:latest -f Dockerfile --build-arg ENV_FILE=.env .
       docker push jdacr1.azurecr.io/my-node-users-api:latest
     displayName: "Build and Push Docker Image"
