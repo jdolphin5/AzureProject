@@ -1,0 +1,24 @@
+trigger:
+  branches:
+    include:
+      - main # Specify branch to trigger the pipeline
+
+pool:
+  name: "VM-Agent-Pool" # Use the name of your self-hosted agent pool
+  demands: # Optional, add any specific requirements for your agent (e.g., Docker installed)
+    - docker
+
+steps:
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: "AzureRMServiceConnection" # Service connection name
+      scriptType: "bash"
+      scriptLocation: "inlineScript"
+      inlineScript: |
+        az acr login --name jdacr1
+    displayName: "Login to Azure Container Registry"
+
+  - script: |
+      docker build -t jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId) -f server/Dockerfile https://github.com/jdolphin5/AzureProject.git#main
+      docker push jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
+    displayName: "Build and Push Docker Image"

@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: mynodeusersapi 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mynodeusersapi
+  template:
+    metadata:
+      labels:
+        app: mynodeusersapi 
+    spec:
+      containers:
+        - name: mynodeusersapi 
+          image: jdacr1.azurecr.io/mynodeusersapi
+          ports:
+          - containerPort: 3000
