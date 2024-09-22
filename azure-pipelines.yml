@@ -31,5 +31,6 @@ steps:
   - script: |
       cd server
       docker buildx build -t jdacr1.azurecr.io/my-node-users-api:latest -f Dockerfile --build-arg ENV_FILE=$(DownloadEnvFile.secureFilePath) .
+      docker tag jdacr1.azurecr.io/my-node-users-api:latest jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
       docker push jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
     displayName: "Build and Push Docker Image"
