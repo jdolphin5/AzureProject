@@ -30,6 +30,6 @@ steps:
     displayName: "Clone repo and move to server folder"
 
   - script: |
-      docker build -t jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
+      docker build --build-arg ENV_FILE=$(DownloadEnvFile.secureFilePath) -t jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
       docker push jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
     displayName: "Build and Push Docker Image"
