@@ -9,6 +9,12 @@ pool:
     - docker
 
 steps:
+  - task: DownloadSecureFile@1
+    name: DownloadEnvFile
+    inputs:
+      secureFile: ".env"
+    displayName: "Download secure .env file"
+
   - task: AzureCLI@2
     inputs:
       azureSubscription: "AzureRMServiceConnection" # Service connection name
