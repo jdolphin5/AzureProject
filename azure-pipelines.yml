@@ -19,6 +19,11 @@ steps:
     displayName: "Login to Azure Container Registry"
 
   - script: |
-      docker build -t jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId) -f server/Dockerfile https://github.com/jdolphin5/AzureProject.git#main
+      git clone https://github.com/jdolphin5/AzureProject.git
+      cd server
+    displayName: "Clone repo and move to server folder"
+
+  - script: |
+      docker build -t jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
       docker push jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
     displayName: "Build and Push Docker Image"
