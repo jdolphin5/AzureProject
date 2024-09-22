@@ -26,7 +26,7 @@ steps:
 
   - script: |
       git clone https://github.com/jdolphin5/AzureProject.git
-    displayName: "Clone repo and move to server folder"
+    displayName: "Clone repo"
 
   - script: |
       cd server
