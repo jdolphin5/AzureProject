@@ -9,20 +9,16 @@ pool:
     - docker
 
 steps:
-  #  - task: UseDotNet@2
-  #    inputs:
-  #      packageType: "sdk"
-  #      version: "6.x"
-
-  #  - script: |
-  #      dotnet build --configuration Release
-  #      dotnet test --configuration Release
-  #    displayName: "Build and Test"
-
-  - task: Docker@2
+  - task: AzureCLI@2
     inputs:
-      command: buildAndPush
-      repository: $(containerRegistry)/my-node-users-api
-      Dockerfile: "**/Dockerfile"
-      tags: |
-        $(Build.BuildId)
+      azureSubscription: "AzureRMServiceConnection" # Service connection name
+      scriptType: "bash"
+      scriptLocation: "inlineScript"
+      inlineScript: |
+        az acr login --name jdacr1
+    displayName: "Login to Azure Container Registry"
+
+  - script: |
+      docker build -t jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId) .
+      docker push jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
+    displayName: "Build and Push Docker Image"
