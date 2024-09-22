@@ -1,0 +1,49 @@
+====== installs ======
+- npm install sqlite3
+- npm install express
+
+
+Startup docker desktop, from /server/, run:
+- docker-compose up
+
+Postman to run HTTP Requests : http://localhost:3000/users
+
+Service type: SQL Database
+SQL server: jd-azure-server-1
+SQL database: jd-db-1
+user: in .env
+pass: in .env
+
+    az login
+
+Connect kubernetes to aks cluster:
+    az aks get-credentials --resource-group jd-1_group --name aks-cluster-01
+To execute kubernetes yaml:
+    kubectl apply -f service.yaml
+
+Connect to linux VM via SSH from keys folder
+    ssh -i  .\jdvmpipeline1_key.pem azureuser@20.107.243.137
+
+List VM vCPU instances per region:
+    az vm list-usage --location "East US" -o table
+
+Setup VM (linux ubuntu 22.04) with node and docker:
+    sudo apt update
+    sudo apt install nodejs
+    sudo apt install npm
+    sudo apt install git
+
+using docker install script:
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+
+give user docker permissions:
+    sudo usermod -aG docker $(whoami)
+
+install Azure CLI:
+    curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+    wget vsts-agent-linux-x64-4.244.1.tar.gz
+    tar zxvf vsts-agent-linux-x64-4.244.1.tar.gz
+    ./config.sh
+    ./run.sh
