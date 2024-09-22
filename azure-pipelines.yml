@@ -28,14 +28,16 @@ steps:
       git clone https://github.com/jdolphin5/AzureProject.git
     displayName: "Clone repo"
 
-# docker buildx build -t jdacr1.azurecr.io/my-node-users-api:latest -f Dockerfile --build-arg ENV_FILE=$(DownloadEnvFile.secureFilePath) .
-# docker tag jdacr1.azurecr.io/my-node-users-api:latest jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
-# docker push jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
+  # docker buildx build -t jdacr1.azurecr.io/my-node-users-api:latest -f Dockerfile --build-arg ENV_FILE=$(DownloadEnvFile.secureFilePath) .
+  # docker tag jdacr1.azurecr.io/my-node-users-api:latest jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
+  # docker push jdacr1.azurecr.io/my-node-users-api:$(Build.BuildId)
 
   - script: |
       cd server
-      
+
       docker tag jdacr1.azurecr.io/my-node-users-api:latest jdacr1.azurecr.io/my-node-users-api:backup-latest
+      docker push jdacr1.azurecr.io/my-node-users-api:backup-latest
+
       docker buildx build -t jdacr1.azurecr.io/my-node-users-api:latest -f Dockerfile --build-arg ENV_FILE=$(DownloadEnvFile.secureFilePath) .
       docker push jdacr1.azurecr.io/my-node-users-api:latest
     displayName: "Build and Push Docker Image"
