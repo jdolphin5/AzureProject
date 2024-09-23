@@ -1,0 +1,47 @@
+- npm install express
+
+Startup docker desktop, from /server/, run:
+- docker-compose up
+
+Postman to run HTTP Requests : http://localhost:3000/users
+
+Service type: SQL Database
+SQL server: jd-azure-server-1
+SQL database: jd-db-1
+user: in .env
+pass: in .env
+
+    az login
+
+Connect Kubernetes to AKS Cluster:
+    az aks get-credentials --resource-group jd-1_group --name aks-cluster-01
+To execute Kubernetes YAML:
+    kubectl apply -f service.yaml
+
+Connect to Linux VM via SSH from folder with key
+    ssh -i  .\jdvmpipeline1_key.pem azureuser@SELF_HOSTED_AGENT_VM_IP_ADDRESS
+
+List VM vCPU instances per region:
+    az vm list-usage --location "East US" -o table
+
+Setup VM (linux Ubuntu 22.04) with Node and Docker:
+    sudo apt update
+    sudo apt install nodejs
+    sudo apt install npm
+    sudo apt install git
+
+    Using docker install script:
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sudo sh get-docker.sh
+        sudo apt install docker-compose
+
+    Give user docker permissions:
+        sudo usermod -aG docker $(whoami)
+
+    Install Azure CLI:
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+        wget vsts-agent-linux-x64-4.244.1.tar.gz
+        tar zxvf vsts-agent-linux-x64-4.244.1.tar.gz
+        ./config.sh
+        ./run.sh
