@@ -93,7 +93,7 @@ app.get("/users/:id", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json(result.recordset[0], "Success!!");
+    res.status(200).json(result.recordset[0], "Success!! c");
   } catch (error) {
     console.error("Error fetching user:", error);
     res.status(500).json({ error: "Database query error" });
